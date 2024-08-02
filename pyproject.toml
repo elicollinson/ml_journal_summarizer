@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "ml-journal-summarizer"
+version = "0.1.0"
+description = ""
+authors = ["Eli Collinson <eli@elicollinson.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "<3.13,>=3.9"
+bs4 = "^0.0.2"
+pydantic = "^2.8.2"
+pymupdf = "^1.24.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
