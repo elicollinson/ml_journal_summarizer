@@ -132,7 +132,7 @@ class ScrapeUtils(): # type: ignore
         docs = []
         for url in self.new_paper_urls:
             try:
-                text = extract_text_from_url(url)
+                text = self.extract_text_from_url(url)
                 docs.append(ExtractedDocument(text, url))
                 print(text)
             except Exception as e:
