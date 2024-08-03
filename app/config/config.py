@@ -10,21 +10,14 @@ def getenv(name: str, default: str) -> str:
 class Settings(BaseSettings):
     MODEL: str = getenv("MODEL", "gpt-4o-mini")
     OPENAI_API_KEY: str = getenv("OPENAI_API_KEY", "")
+    MAX_TOKENS: int = getenv("MAX_TOKENS", 1000)
     EXECUTION_IMAGE: str = getenv("EXECUTION_IMAGE", "python:3.12-slim")
     EXECUTION_TIMEOUT: str = getenv("EXECUTION_TIMEOUT", 120)
-    CODE_WRITER_SYSTEM_MESSAGE: str = getenv("CODE_WRITER_SYSTEM_MESSAGE", """You are a helpful AI assistant.
-        Solve tasks using your coding and language skills.
-        In the following cases, suggest python code (in a python coding block) or shell script (in a sh coding block) for the user to execute.
-        1. When you need to collect info, use the code to output the info you need, for example, browse or search the web, download/read a file, print the content of a webpage or a file, get the current date/time, check the operating system. After sufficient info is printed and the task is ready to be solved based on your language skill, you can solve the task by yourself.
-        2. When you need to perform some task with code, use the code to perform the task and output the result. Finish the task smartly.
-        Solve the task step by step if you need to. If a plan is not provided, explain your plan first. Be clear which step uses code, and which step uses your language skill.
-        When using code, you must indicate the script type in the code block. The user cannot provide any other feedback or perform any other action beyond executing the code you suggest. The user can't modify your code. So do not suggest incomplete code which requires users to modify. Don't use a code block if it's not intended to be executed by the user.
-        If you want the user to save the code in a file before executing it, put # filename: <filename> inside the code block as the first line. Don't include multiple code blocks in one response. Do not ask users to copy and paste the result. Instead, use 'print' function for the output when relevant. Check the execution result returned by the user.
-        If the result indicates there is an error, fix the error and output the code again. Suggest the full code instead of partial code or code changes. If the error can't be fixed or if the task is not solved even after the code is executed successfully, analyze the problem, revisit your assumption, collect additional info you need, and think of a different approach to try.
-        When you find an answer, verify the answer carefully. Include verifiable evidence in your response if possible.
-        3. Always install depenedencies in the local environment, make sure if updating code dependency install commands are included after the updates.
-        Reply 'TERMINATE' in the end when everything is done.
-    """) # type: ignore
+    SUMMARIZE_PROMPT: str = getenv("SUMMARIZE_PROMPT", "You are a paper summarizer. You will be given a paper published in a machine learning journal. Your task is to summarize the paper while capturing the import details.\n\nFollow these rules:\n1.Ensure the grammar is correct in your response.\n2.Ensure all key conclusions from the paper are documented and supported.\n3.Do not embelish or add additional information, only summarize what is stated in the paper.\n4.Ignore references to figures and images.\n5.Respond only with the text of the summary.\n\nPaper Text:\n") # type: ignore
+    TITLE_PROMPT:str = getenv("TITLE_PROMPT", "You are a title extractor. You will be given the text of a journal article published in a machine learning journal. Your task is to extract the title of the article based on the given text. Respond only with the title. If you cannot find the title, respond with 'unknown'.\n\nJournal Text:\n") # type: ignore
+    PUBLICATION_DATE_PROMPT:str = getenv("PUBLICATION_DATE_PROMPT", "You are a publication date extractor. You will be given the text of a journal article published in a machine learning journal. Your task is to extract the publication date of the article based on the given text. Respond only with the publication date. If you cannot find the publication date, respond with 'unknown'.\n\nJournal Text:\n") # type: ignore
+    #TODO: fix invalid escape sequence
     INGESTED_LIST_FILE: str = getenv("INGESTED_LIST_FILE", "app\\resources\ingest_list.txt")
     SOURCE_URLS: list[str] = ["https://www.jmlr.org/"]
+    BASE_SOURCE_URL: str = "https://www.jmlr.org/"
 settings = Settings()

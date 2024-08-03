@@ -1,9 +1,7 @@
-import os
-import autogen
-from autogen import AssistantAgent, UserProxyAgent
+from app.orchestrator.scholarly_summary import ScholarlySummary
 
 
 def main():
-    print("Starting the application")
+    ScholarlySummary().run()
     
 main()
